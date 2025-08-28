@@ -372,3 +372,4 @@ def measure_stack_performance(catalog):
         "top_time": top_time,
         "pop_time": pop_time
     }
+    
