@@ -65,6 +65,17 @@ def load_data(control):
 
 def print_books_to_read(results):
     # TODO Imprimir los libros por leer
+    print("\nLibros por leer del usuario:")
+    if st.is_empty(results):
+        print("No hay libros por leer para este usuario.")
+    else:
+        temp_stack = st.new_stack()
+        while not st.is_empty(results):
+            book = st.pop(results)
+            print(f"- Libro ID: {book}")
+            st.push(temp_stack, book)
+        while not st.is_empty(temp_stack):
+            st.push(results, st.pop(temp_stack))
     pass
 
 
@@ -82,6 +93,13 @@ def print_tests_results(queue_results, stack_results):
           f"{queue_results['dequeue_time']:.3f}", "[ms]")
 
     print("\nTiempos de ejecución para Pila: \n")
+    print("Tiempo de ejecución para push:",
+          f"{stack_results['push_time']:.3f}", "[ms]")
+    print("Tiempo de ejecución para top:",
+          f"{stack_results['top_time']:.3f}", "[ms]")
+    print("Tiempo de ejecución para pop:",
+          f"{stack_results['pop_time']:.3f}", "[ms]")
+
 
     # TODO Imprimir los resultados de las pruebas de rendimiento de la pila
 
@@ -122,6 +140,10 @@ def main():
             result = logic.get_user_position_on_queue(
                 control, int(user_id), int(book_id))
             # TODO Imprimir la posición del usuario en la cola
+            if result == -1:
+                print(f"El usuario {user_id} no se encuentra en la cola para el libro {book_id}.")
+            else:
+                print(f"El usuario {user_id} está en la posición {result} de la cola para el libro {book_id}.")
 
         elif int(inputs[0]) == 4:
             size = input("Indique tamaño de la muestra: ")
