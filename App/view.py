@@ -26,6 +26,8 @@
 
 import sys
 import App.logic as logic
+from DataStructures.Queue import queue as q
+from DataStructures.Stack import stack as st
 
 """
 La vista se encarga de la interacción con el usuario
