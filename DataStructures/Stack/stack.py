@@ -1,34 +1,34 @@
-# DataStructures/Stack/stack.py
+from DataStructures.List import array_list as lt
+#from DataStructures.List import single_linked_list as lt
 
 def new_stack():
    
-    return {"elements": []}
+    return lt.new_list()
 
 
-def push(stack, element):
+def push(my_stack, element):
 
-    stack["elements"].append(element)
-
-
-def pop(stack):
- 
-    if is_empty(stack):
-        return None
-    return stack["elements"].pop()
+    lt.add_first(my_stack, element)
+    return my_stack
 
 
-def top(stack):
+def pop(my_stack):
+    if lt.is_empty(my_stack):
+        raise Exception("EmptyStructureError: stack is empty")
+    return lt.remove_first(my_stack)
+
    
-    if is_empty(stack):
-        return None
-    return stack["elements"][-1]
+def top(my_stack):
+    if lt.is_empty(my_stack):
+        raise Exception("EmptyStructureError: stack is empty")
+    return lt.first_element(my_stack)#["info"]
 
 
-def is_empty(stack):
+def is_empty(my_stack):
 
-    return len(stack["elements"]) == 0
+    return lt.is_empty(my_stack)
 
 
-def size(stack):
+def size(my_stack):
 
-    return len(stack["elements"])
+    return lt.size(my_stack)

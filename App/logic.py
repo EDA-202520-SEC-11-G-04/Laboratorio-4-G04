@@ -33,7 +33,7 @@ from DataStructures.Queue import queue as q
 from DataStructures.Stack import stack as st
 # TODO Importar las librerías correspondientes para el manejo de pilas y colas
 
-data_dir = os.path.dirname(os.path.realpath('__file__')) + '/Data/'
+data_dir = os.path.dirname(os.path.realpath('__file__')) + '/Data/GoodReads/'
 
 """
 El controlador se encarga de mediar entre la vista y el modelo.
@@ -136,7 +136,7 @@ def get_books_stack_by_user(catalog, user_id):
     books_stack = st.new_stack()
 
     # TODO Completar la función que retorna los libros por leer de un usuario. Se debe usar el TAD Pila para resolver el requerimiento
-    for i in range(lt.size(catalog['books_to_read'])):
+    for i in range(1,lt.size(catalog['books_to_read'])):
         book = lt.get_element(catalog['books_to_read'], i)
         if book['user_id'] == user_id:
             st.push(books_stack, book['book_id'])
@@ -149,19 +149,26 @@ def get_user_position_on_queue(catalog, user_id, book_id):
     """
     queue = q.new_queue()
     position = -1
-    for i in range(lt.size(catalog['books_to_read'])):
+
+    # Construir la cola con los usuarios interesados en el libro
+    for i in range(1, lt.size(catalog['books_to_read']) + 1):
         book = lt.get_element(catalog['books_to_read'], i)
         if book['book_id'] == book_id:
             q.enqueue(queue, book['user_id'])
-    # Trouver la position de user_id dans la queue
-    for pos in range(lt.size(queue['elements'])):  # queue['elements'] selon ton implémentation
-        if queue['elements'][pos] == user_id:
-            position = pos + 1  # Position humaine
-            break
 
-    # TODO Completar la función que retorna la posición de un usuario en la cola para leer un libro. Se debe usar el TAD Cola para resolver el requerimiento.
+    # Recorrer la cola hasta encontrar el usuario
+    temp_queue = q.new_queue()
+    pos = 1
+    while not q.is_empty(queue):
+        current = q.dequeue(queue)
+        q.enqueue(temp_queue, current)  # preservamos la cola
+        if current == user_id and position == -1:
+            position = pos
+        pos += 1
 
     return position
+
+    # TODO Completar la función que retorna la posición de un usuario en la cola para leer un libro. Se debe usar el TAD Cola para resolver el requerimiento.
 
 # Funciones para agregar informacion al catalogo
 
@@ -337,7 +344,7 @@ def measure_queue_performance(catalog):
     # Medir enqueue
     start_time = get_time()
     for pos in range(lt.size(catalog["book_sublist"])):
-        book = lt.get_element(catalog["book_sublist"], pos)
+        book = lt.get_element(catalog["book_sublist"], pos+1)
         q.enqueue(queue, book)
     end_time = get_time()
     enqueue_time = delta_time(start_time, end_time)
@@ -373,7 +380,7 @@ def measure_stack_performance(catalog):
     start_time = get_time()
     # TODO Implementar la medición de tiempo para la operación push
     for pos in range(lt.size(catalog["book_sublist"])):
-        book = lt.get_element(catalog["book_sublist"], pos)
+        book = lt.get_element(catalog["book_sublist"], pos+1)
         st.push(stack, book)
     end_time = get_time()
     push_time = delta_time(start_time, end_time)

@@ -99,7 +99,7 @@ def remove_first(my_list):
         my_list["first"]=None
         my_list["last"]=None
     else:
-        my_list["first"]=my_list["fisrt"]["next"]
+        my_list["first"]=my_list["first"]["next"]
         my_list["size"]-=1
     return val
      

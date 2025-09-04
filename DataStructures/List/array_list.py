@@ -6,7 +6,7 @@ def new_list():
     return newlist
 
 def get_element(my_list, index):
-    return my_list["elements"][index]
+    return my_list["elements"][index-1]
 
 def is_present(my_list,element, cmp_function):
     size=my_list["size"]
@@ -22,9 +22,9 @@ def is_present(my_list,element, cmp_function):
     return -1
 
 def add_first(my_list,element):
-    my_list["elements"].insert(element,0)
-    my_list["size"] += 1                   # augmente la taille
-    return my_list
+     my_list["elements"].insert(0, element)  
+     my_list["size"] += 1
+     return my_list
 
 def add_last(my_list,element):
     my_list["elements"].append(element)
